@@ -1,0 +1,37 @@
+logging.level:
+  org.springframework.cloud.gateway: DEBUG
+
+server:
+  port: 8765
+
+spring:
+
+  cloud:
+    gateway:
+      default-filters:
+        - RemoveResponseHeader=Set-Cookie
+      routes:
+        - id: rest-endpoint
+          uri: lb:http://rest-endpoint
+          predicates:
+            - Path=/rest-endpoint/api/**
+          filters:
+            - StripPrefix=1
+        - id: websocket
+          uri: lb://websocket
+          predicates:
+            - Path=/**
+          filters:
+
+  sleuth:
+    traceId128: true
+    sampler:
+      probability: 1.0
+    web.skipPattern: (^cleanup.*|.+favicon.*)
+
+management:
+  endpoints:
+    web.exposure.include: '*'
+  endpoint:
+    health.show-details: ALWAYS
+

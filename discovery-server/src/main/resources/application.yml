@@ -1,0 +1,21 @@
+logging.level:
+  com.netflix.eureka: OFF
+  com.netflix.discovery: OFF
+
+server:
+  port: 8761
+
+spring:
+
+  sleuth:
+    traceId128: true
+    sampler:
+      probability: 1.0
+    web.skipPattern: (^cleanup.*|.+favicon.*)
+
+management:
+  endpoints:
+    web.exposure.include: '*'
+  endpoint:
+    health.show-details: ALWAYS
+

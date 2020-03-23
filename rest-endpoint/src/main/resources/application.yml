@@ -1,0 +1,29 @@
+logging.level:
+  org.springframework.cloud.stream: DEBUG
+  org.springframework.web: DEBUG
+  io.pivotal.dmfrey: DEBUG
+
+server:
+  port: ${PORT:8080}
+
+spring:
+
+  cloud:
+
+    stream:
+      source: output
+      bindings:
+        output-out-0:
+          destination: request
+
+  sleuth:
+    traceId128: true
+    sampler:
+      probability: 1.0
+    web.skipPattern: (^cleanup.*|.+favicon.*)
+
+management:
+  endpoints:
+    web.exposure.include: '*'
+  endpoint:
+    health.show-details: ALWAYS

@@ -1,0 +1,33 @@
+logging.level:
+  org.springframework.amqp: DEBUG
+  org.springframework.cloud.stream: DEBUG
+  org.springframework.cloud.function: DEBUG
+  org.springframework.web: DEBUG
+  io.pivotal.dmfrey: DEBUG
+
+server:
+  port: 8081
+
+spring:
+
+  cloud:
+
+#    function.definition: listener
+    stream:
+      bindings:
+        listener-in-0:
+          destination: request
+          group: websocket
+
+  sleuth:
+    traceId128: true
+    sampler:
+      probability: 1.0
+    web.skipPattern: (^cleanup.*|.+favicon.*)
+
+management:
+  endpoints:
+    web.exposure.include: '*'
+  endpoint:
+    health.show-details: ALWAYS
+
